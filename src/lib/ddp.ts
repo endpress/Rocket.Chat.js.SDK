@@ -84,7 +84,7 @@ export class EventEmitter {
         try {
           listener.apply(this, args)
         } catch (err) {
-          logger.error(`[ddp] event emit error: ${err.message}`)
+          // logger.error(`[ddp] event emit error: ${err.message}`)
         }
       })
     }
@@ -175,7 +175,7 @@ export default class Socket extends EventEmitter {
     })
 
     this._connect().catch(e => {
-      logger.error(`[ddp] connection error: ${e.message}`)
+      // logger.error(`[ddp] connection error: ${e.message}`)
     })
   }
 
@@ -254,7 +254,7 @@ export default class Socket extends EventEmitter {
         delete this.connection
       }
     } catch (err) {
-      logger.error(`[ddp] disconnect error: ${err.message}`)
+      // logger.error(`[ddp] disconnect error: ${err.message}`)
     }
   }
 
@@ -289,7 +289,7 @@ export default class Socket extends EventEmitter {
           this.emit(data.msg, data)
           return data.collection && this.emit(data.collection, data)
         } catch (err) {
-          logger.error(`[ddp] EJSON parse error: ${e.message}`)
+          // logger.error(`[ddp] EJSON parse error: ${e.message}`)
         }
       }
     })
@@ -327,7 +327,7 @@ export default class Socket extends EventEmitter {
       try {
         await this._connect()
       } catch (err) {
-        logger.error(`[ddp] reconnect error: ${err.message}`)
+        // logger.error(`[ddp] reconnect error: ${err.message}`)
       }
     }, 1000)
   }
@@ -342,7 +342,10 @@ export default class Socket extends EventEmitter {
     return this.send({
       msg: 'method', method, params
     }).catch((err) => {
-      logger.error(`[ddp] call error: ${err.message}`)
+      // logger.error(`[ddp] call error: ${err.message}`)
+      if (err && /you've been logged out by the server/i.test(err.reason)) {
+				this.emit('forbidden');
+			}
       return Promise.reject(err)
     })
   }
@@ -361,7 +364,7 @@ export default class Socket extends EventEmitter {
       msg: 'unsub',
       id
     }).then((data: any) => data.result || data.subs).catch((err) => {
-      logger.error(`[ddp] unsubscribe error: ${err.message}`)
+      // logger.error(`[ddp] unsubscribe error: ${err.message}`)
       return Promise.reject(err)
     })
   }
@@ -387,7 +390,7 @@ export default class Socket extends EventEmitter {
       this.subscriptions[id] = args
       return args
     }).catch((err) => {
-      logger.error(`[ddp] subscribe error: ${err.message}`)
+      // logger.error(`[ddp] subscribe error: ${err.message}`)
       return Promise.reject(err)
     })
   }
