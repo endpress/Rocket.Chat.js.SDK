@@ -109,7 +109,7 @@ export async function post (
 ): Promise<any> {
   try {
     logger.debug(`[API] POST: ${endpoint}`, JSON.stringify(data))
-    if (auth && !loggedIn()) await login()
+    // if (auth && !loggedIn()) await login()
     let headers = getHeaders(auth)
     const result = await new Promise((resolve, reject) => {
       client.post(url + endpoint, { headers, data }, (result: any) => {
@@ -141,7 +141,7 @@ export async function get (
 ): Promise<any> {
   try {
     logger.debug(`[API] GET: ${endpoint}`, data)
-    if (auth && !loggedIn()) await login()
+    // if (auth && !loggedIn()) await login()
     let headers = getHeaders(auth)
     const query = getQueryString(data)
     const result = await new Promise((resolve, reject) => {
