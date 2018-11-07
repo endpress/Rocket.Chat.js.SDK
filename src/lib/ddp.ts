@@ -213,7 +213,7 @@ export default class Socket extends EventEmitter {
         error.reason = 'User or Password incorrect'
         error.message = 'User or Password incorrect'
       }
-      this.emit('logginError', error)
+      this.emit('loginError', err, params)
       return Promise.reject(error)
     }
   }
