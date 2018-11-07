@@ -274,6 +274,7 @@ class Socket extends EventEmitter {
      */
     logout() {
         this._login = null;
+        this.emit('logout');
         return this.call('logout').then(() => this.subscriptions = {});
     }
     /**
@@ -281,7 +282,7 @@ class Socket extends EventEmitter {
      */
     disconnect() {
         this._close();
-        this._login = null;
+        // this._login = null
         this.subscriptions = {};
     }
     /**

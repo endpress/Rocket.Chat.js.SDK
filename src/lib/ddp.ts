@@ -300,6 +300,7 @@ export default class Socket extends EventEmitter {
    */
   logout (): Promise<any> {
     this._login = null
+    this.emit('logout');
     return this.call('logout').then(() => this.subscriptions = {})
   }
 
@@ -308,7 +309,7 @@ export default class Socket extends EventEmitter {
    */
   disconnect () {
     this._close()
-    this._login = null
+    // this._login = null
     this.subscriptions = {}
   }
 
