@@ -174,6 +174,12 @@ export default class Socket extends EventEmitter {
       await this.send({ msg: 'connect', version: '1', support: ['1', 'pre2', 'pre1'] })
     })
 
+    this.on('connected', async () => {
+      if (this._logged == false) {
+        this._login && this.login(this._login);
+      }
+    });
+
     this._connect().catch(e => {
       // logger.error(`[ddp] connection error: ${e.message}`)
     })
