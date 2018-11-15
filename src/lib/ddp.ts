@@ -174,11 +174,11 @@ export default class Socket extends EventEmitter {
       await this.send({ msg: 'connect', version: '1', support: ['1', 'pre2', 'pre1'] })
     })
 
-    this.on('connected', async () => {
-      if (this._logged == false) {
-        this._login && this.login(this._login);
-      }
-    });
+    // this.on('connected', async () => {
+    //   if (this._logged == false) {
+    //     this._login && this.login(this._login);
+    //   }
+    // });
 
     this._connect().catch(e => {
       // logger.error(`[ddp] connection error: ${e.message}`)
@@ -305,7 +305,7 @@ export default class Socket extends EventEmitter {
    * Logs out the current User from the server via Socket.
    */
   logout (): Promise<any> {
-    this._login = null
+    // this._login = null
     this.emit('logout');
     return this.call('logout').then(() => this.subscriptions = {})
   }
