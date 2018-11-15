@@ -150,6 +150,11 @@ class Socket extends EventEmitter {
             this._logged = false;
             yield this.send({ msg: 'connect', version: '1', support: ['1', 'pre2', 'pre1'] });
         }));
+        this.on('connected', () => __awaiter(this, void 0, void 0, function* () {
+            if (this._logged == false) {
+                this._login && this.login(this._login);
+            }
+        }));
         this._connect().catch(e => {
             // logger.error(`[ddp] connection error: ${e.message}`)
         });
